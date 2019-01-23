@@ -60,6 +60,7 @@ Vue.component('Photos', {
 	computed: {},
 	watch: {
 		query() {
+			this.resultPhotos = [];
 			if (this.query.length >= this.minLengthQuery) {
 				this.doDebouncedQuery();
 			}
