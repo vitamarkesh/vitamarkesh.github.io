@@ -53,11 +53,7 @@ Vue.component('Photos', {
 		this.maxCountPhotos = this.$root.maxCountPhotos;
 		this.debug = this.$root.debug;
 		this.v_api = this.$root.vk.v_api;
-		this.sizes = [
-			'photo_604',
-			'photo_130',
-			'photo_75',
-		];
+		this.sizeType = 'r'; // 510
 		this.debouncPeriod = 300;
 		this.doDebouncedQuery = _.debounce(this.doQuery, this.debouncPeriod);
 	},
@@ -96,7 +92,9 @@ Vue.component('Photos', {
 							v: this.v_api,
 						}, r => {
 							if (!r.error) {
-								const photos = r.response.items.map(this.item2photo);
+								const photos = r.response.items
+									.map(this.item2photo)
+									.filter(photo => photo.href);
 								resolve(photos);
 							} else {
 								reject(new Error(r.error.error_msg));
@@ -107,21 +105,23 @@ Vue.component('Photos', {
 				}
 			});
 		},
-		getHref(item) {
-			let href;
-			for (let i=0; i<this.sizes.length; i++) {
-				const size = this.sizes[i];
-				if (item[size]) {
-					href = item[size];
-					break;
-				}
-			}
-			return href;
+		getHref(sizes) {
+			const sizeR = _.find(sizes, {
+				'type': this.sizeType
+			});
+			if (!sizeR) throw new Error('Отсутствует размер '+this.sizeType);
+			return sizeR.url;
 		},
-		item2photo(item) { console.log(item);
+		item2photo(item) {
+			let href;
+			try {
+				href = this.getHref(item.sizes);
+			} catch (error) {
+				console.error(error.message);
+			}
 			return {
 				id: item.id,
-				href: this.getHref(item),
+				href: href,
 			};
 		},
 		getDebugResults() {
