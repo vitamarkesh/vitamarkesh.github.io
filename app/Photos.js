@@ -52,6 +52,7 @@ Vue.component('Photos', {
 		this.minLengthQuery = this.$root.minLengthQuery;
 		this.maxCountPhotos = this.$root.maxCountPhotos;
 		this.debug = this.$root.debug;
+		this.v_api = this.$root.vk.v_api;
 		this.debouncPeriod = 300;
 		this.doDebouncedQuery = _.debounce(this.doQuery, this.debouncPeriod)
 	},
@@ -87,6 +88,7 @@ Vue.component('Photos', {
 						{
 							q: this.query,
 							count: this.maxCountPhotos,
+							v: this.v_api,
 						}, r => {
 							const photos = r.response.items.map(this.item2photo);
 							resolve(photos);
