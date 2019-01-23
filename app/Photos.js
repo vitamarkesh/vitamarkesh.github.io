@@ -66,7 +66,7 @@ Vue.component('Photos', {
 		}
 	},
 	methods: {
-		doQuery() { console.log('doQuery');
+		doQuery() {
 			this.doSearch()
 				.then(photos => {
 					this.resultPhotos = photos;
@@ -113,16 +113,23 @@ Vue.component('Photos', {
 			return sizeR.url;
 		},
 		item2photo(item) {
-			let href;
-			try {
-				href = this.getHref(item.sizes);
-			} catch (error) {
-				console.error(error.message);
+			if (!this.debug) {
+				let href;
+				try {
+					href = this.getHref(item.sizes);
+				} catch (error) {
+					console.error(error.message);
+				}
+				return {
+					id: item.id,
+					href: href,
+				};
+			} else {
+				return {
+					id: item.id,
+					href: item.photo_604,
+				};
 			}
-			return {
-				id: item.id,
-				href: href,
-			};
 		},
 		getDebugResults() {
 			return [{
