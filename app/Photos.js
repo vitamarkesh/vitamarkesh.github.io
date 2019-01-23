@@ -88,13 +88,14 @@ Vue.component('Photos', {
 						{
 							q: this.query,
 							count: this.maxCountPhotos,
-							v: this.v_api,
+							//v: this.v_api,
 						}, r => {
-							const photos = r.response.items.map(this.item2photo);
-							resolve(photos);
-
-							// TODO выяснить, как openapi возвращает ошибку
-							//reject(new Error('Error'));
+							if (r.error) { log.error(r.error);
+								reject(new Error('Error'));
+							} else {
+								const photos = r.response.items.map(this.item2photo);
+								resolve(photos);
+							}
 						});
 				} else {
 					resolve(this.getDebugResults().map(this.item2photo));
