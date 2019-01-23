@@ -90,7 +90,7 @@ Vue.component('Photos', {
 							count: this.maxCountPhotos,
 							//v: this.v_api,
 						}, r => {
-							if (r.error) { log.error(r.error);
+							if (r.error) { console.error(r.error);
 								reject(new Error('Error'));
 							} else {
 								const photos = r.response.items.map(this.item2photo);
