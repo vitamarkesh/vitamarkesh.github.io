@@ -4,11 +4,62 @@
     <title>Test</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios-jsonp-pro/dist/axios.min.js"></script>
+    <script src="https://vk.com/js/api/openapi.js?160"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+    <script src="/app/Photo.js"></script>
+    <script src="/app/Photos.js"></script>
     <script src="/app/App.js"></script>
     <style>
         body {
             padding: 2rem;
+        }
+        .App {
+            width: 1030px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .Photos__row {
+            display: flex;
+            flex-direction: row;
+        }
+        .Photo {
+            width: 206px;
+            height: 95px;
+            background-size: cover;
+            background-position: center top;
+            background-color: grey;
+            margin-bottom: 20px;
+        }
+        .Photos__input {
+            margin-bottom: 50px;
+            display: block;
+        }
+        .Photos__input,
+        .Photos__resultPhotos {
+            width: 670px;
+            margin-right: 85px;
+        }
+        .Photos__resultPhotos {
+            display: flex;
+            align-content: flex-start;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .Photos__favouriteTitleCont,
+        .Photos__favouritePhotos {
+            border-left: 1px solid grey;
+            padding-left: 30px;
+        }
+        .Photos__favouritePhotos .Photo {
+            width: 240px;
+        }
+        .Photos__favouriteTitle {
+            margin-left: 20px;
+        }
+        .Photo__button {
+            cursor: pointer;
+            margin: 5px;
         }
     </style>
 </head>

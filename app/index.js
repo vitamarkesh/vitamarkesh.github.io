@@ -1,15 +1,11 @@
 new Vue({
 	el: '#app',
-	data: {},
 	template: `
 		<App/>
 	`,
 	created() {
-
-	},
-	computed: {},
-	watch: {},
-	methods: {
-
+		this.minLengthQuery = 3;
+		this.maxCountPhotos = 50;
+		this.debug = false;
 	},
 });
