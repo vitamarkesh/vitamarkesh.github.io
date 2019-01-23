@@ -13,8 +13,8 @@ body {
 .Photo {
 	width: 206px;
 	height: 95px;
-	background-size: cover;
-	background-position: center top;
+	background-size: contain;
+	background-position: center;
 	background-color: grey;
 	margin-bottom: 20px;
 }
