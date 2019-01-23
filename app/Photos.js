@@ -53,8 +53,13 @@ Vue.component('Photos', {
 		this.maxCountPhotos = this.$root.maxCountPhotos;
 		this.debug = this.$root.debug;
 		this.v_api = this.$root.vk.v_api;
+		this.sizes = [
+			'photo_604',
+			'photo_130',
+			'photo_75',
+		];
 		this.debouncPeriod = 300;
-		this.doDebouncedQuery = _.debounce(this.doQuery, this.debouncPeriod)
+		this.doDebouncedQuery = _.debounce(this.doQuery, this.debouncPeriod);
 	},
 	computed: {},
 	watch: {
@@ -88,13 +93,13 @@ Vue.component('Photos', {
 						{
 							q: this.query,
 							count: this.maxCountPhotos,
-							//v: this.v_api,
+							v: this.v_api,
 						}, r => {
-							if (r.error) { console.error(r.error);
-								reject(new Error('Error'));
-							} else {
+							if (!r.error) {
 								const photos = r.response.items.map(this.item2photo);
 								resolve(photos);
+							} else {
+								reject(new Error(r.error.error_msg));
 							}
 						});
 				} else {
@@ -102,10 +107,21 @@ Vue.component('Photos', {
 				}
 			});
 		},
-		item2photo(item) {
+		getHref(item) {
+			let href;
+			for (let i=0; i<this.sizes.length; i++) {
+				const size = this.sizes[i];
+				if (item[size]) {
+					href = item[size];
+					break;
+				}
+			}
+			return href;
+		},
+		item2photo(item) { console.log(item);
 			return {
 				id: item.id,
-				href: item.photo_604,
+				href: this.getHref(item),
 			};
 		},
 		getDebugResults() {
